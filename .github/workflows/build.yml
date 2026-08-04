@@ -1,14 +1,24 @@
-name: Build and Deploy WebGL
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     
     steps:
@@ -35,36 +45,17 @@ jobs:
       run: |
         mkdir -p dist
         cp -r index.html src dist/
+        echo "Build completed. Contents of dist:"
+        ls -la dist/
+    
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-pages-artifact@v3
       with:
-        name: webgl-build
-        path: dist/
-        retention-days: 30
-    
-    - name: Create Release
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: softprops/action-gh-release@v2
-      with:
-        files: dist/**/*
-        tag_name: web-build-${{ github.run_number }}
-        name: Web Build #${{ github.run_number }}
-        draft: false
-        prerelease: false
-        fail_on_unmatched_files: false
-        generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      continue-on-error: true
+        path: './dist'
     
     - name: Deploy to GitHub Pages
-      if: always() && github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        publish_branch: gh-pages
-        force_orphan: true
-        full_commit_message: 'Deploy to GitHub Pages'
-      continue-on-error: true
+      id: deployment
+      uses: actions/deploy-pages@v4
