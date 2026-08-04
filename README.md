@@ -1,91 +1,128 @@
 # 3D Tank Battle Game
 
-A modern 3D remake of the classic Tank Battle game with enhanced playability, smooth performance, and universal accessibility.
+A modern 3D tank combat game built with Unity, featuring cross-platform input support, optimized performance, and engaging gameplay mechanics.
 
-## Project Overview
+![Build Status](https://github.com/your-username/3d-tank-battle/actions/workflows/build.yml/badge.svg?branch=main)
 
-- **Core Gameplay**: 3D tank combat with customizable tanks and dynamic environments
-- **Target Platforms**: PC (Windows/Mac/Linux), with potential for Web and Mobile expansion
-- **Game Engine**: Unity 2022 LTS with HDRP (High Definition Render Pipeline)
-- **Development Status**: Phase 1 - Prototype
+## 🎮 Features
 
-## Features
+### Core Gameplay
+- **360° Turret Aiming**: Independent turret rotation with mouse/controller aim
+- **Physics-based Movement**: Smooth tank movement using Unity physics
+- **Object Pooling**: Optimized bullet system with zero instantiation overhead
+- **Multi-platform Input**: Seamless keyboard/mouse and gamepad support
 
-### Universality (普适性)
-- Multi-platform input support (Keyboard, Gamepad, Touch)
-- Resolution adaptive UI (4:3, 16:9, 21:9)
-- Performance scaling (Low/Medium/High/Ultra presets)
-- Accessibility options (colorblind modes, customizable controls, subtitle settings)
+### Technical Highlights
+- **Performance Optimized**: 60+ FPS target with efficient rendering
+- **Cross-platform**: Windows, Linux, macOS support (configurable)
+- **Accessible**: Configurable dead zones and sensitivity settings
+- **Scalable**: Modular architecture for easy feature expansion
 
-### Smoothness (流畅性)
-- Optimized rendering with LOD and occlusion culling
-- Efficient physics with layered collision detection
-- Object pooling for bullets and effects
-- Memory management with minimal garbage collection
-- Network synchronization with client-side prediction (for multiplayer)
+## 🚀 Quick Start
 
-### Playability (可玩性)
-- Deep tank customization system (chassis, weapons, accessories)
-- Multiple game modes (Campaign, Survival, Multiplayer, Challenges)
-- Intelligent AI with behavior trees
-- Dynamic environments with destructible terrain
-- Progression and reward systems
+### Prerequisites
+- Unity 2022.3 LTS or later
+- Git
 
-## Project Structure
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/your-username/3d-tank-battle.git
+cd 3d-tank-battle
+
+# Open in Unity
+# File → Open Project → Select this directory
+```
+
+### Controls
+| Action | Keyboard/Mouse | Gamepad |
+|--------|---------------|---------|
+| Move | WASD | Left Stick |
+| Aim/Turret | Mouse | Right Stick |
+| Fire | Left Click | Right Trigger |
+| Boost | Shift | A Button |
+
+## 📁 Project Structure
 
 ```
 Assets/
 ├── Scripts/
-│   ├── Core/          # Core systems (Input, ObjectPool, GameManager)
-│   ├── Gameplay/      # Game logic (Tank, Weapon, AI)
-│   ├── UI/            # User interface components
-│   └── Utils/         # Utility functions and extensions
-├── Prefabs/           # Reusable prefabs (Tanks, Bullets, Effects)
+│   ├── Core/           # Core systems (Input, Object Pool)
+│   ├── Gameplay/       # Game logic (Tank, Bullet)
+│   ├── UI/            # User interface
+│   └── Utils/         # Utilities
 ├── Scenes/            # Game scenes
-├── Art/               # 3D models, textures, materials
-└── Audio/             # Sound effects and music
+├── Prefabs/           # Reusable objects
+└── Materials/         # Visual materials
 ```
 
-## Getting Started
+## 🔧 Configuration
 
-### Prerequisites
-- Unity Hub 3.x
-- Unity 2022.3 LTS or later
-- Git (for version control)
+### Input Settings
+Configure in `InputManager.cs`:
+- Mouse sensitivity
+- Gamepad dead zone
+- Key bindings
 
-### Installation
-1. Clone this repository
-2. Open the project in Unity Hub
-3. Let Unity import all assets
-4. Open the `Scenes/Prototype` scene to start
+### Performance Settings
+Adjust in Quality Settings:
+- Shadow quality
+- Anti-aliasing
+- Draw distance
 
-### Controls
-- **WASD**: Move tank
-- **Mouse**: Aim turret
-- **Left Click**: Fire main weapon
-- **Right Click**: Use special ability
-- **Space**: Brake/Stop
-- **R**: Reload (if applicable)
+## 🏗️ Build & Deployment
 
-## Development Roadmap
+This project includes automated CI/CD pipeline via GitHub Actions.
 
-- [x] Phase 1: Prototype (Weeks 1-4) - Core gameplay validation
-- [ ] Phase 2: Core Systems (Weeks 5-12) - Alpha version
-- [ ] Phase 3: Content & Polish (Weeks 13-22) - Beta version
-- [ ] Phase 4: Testing & Release (Weeks 23-30) - Version 1.0
+### Automatic Builds
+Pushing to `main` branch triggers:
+1. Unity project build
+2. Windows 64-bit executable generation
+3. Artifact upload to GitHub
 
-## Current Status
+### Creating Releases
+```bash
+# Tag a release version
+git tag v1.0.0
+git push origin v1.0.0
+```
 
-**Week 1**: Project initialization and basic tank movement prototype
+This will automatically:
+- Build the game
+- Create a GitHub Release
+- Attach the executable
 
-## Contributing
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
-This is a demonstration project. For actual development, please refer to the detailed plan in `3d_tank_battle_plan.md`.
+## 🛠️ Development
 
-## License
+### Adding New Features
+1. Create scripts in appropriate folder
+2. Follow existing patterns (e.g., `TankController.cs`)
+3. Update README with new features
+
+### Testing
+1. Open test scene in Unity
+2. Press Play to test controls
+3. Verify frame rate and performance
+
+## 📄 License
 
 MIT License - See LICENSE file for details
 
-## Acknowledgments
+## 🤝 Contributing
 
-Inspired by classic Tank Battle games and modern titles like World of Tanks and Battlefield series.
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+## 📞 Support
+
+- Issues: GitHub Issues tab
+- Documentation: See DEPLOYMENT.md for setup help
+
+---
+
+**Built with Unity 2022.3 LTS** | **Target: 60+ FPS** | **Platforms: Windows, Linux, macOS**
