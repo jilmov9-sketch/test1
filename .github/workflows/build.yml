@@ -53,9 +53,9 @@ jobs:
         draft: false
         prerelease: false
         fail_on_unmatched_files: false
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      continue-on-error: true
     
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -66,4 +66,3 @@ jobs:
         publish_branch: gh-pages
         force_orphan: true
         full_commit_message: 'Deploy to GitHub Pages'
-      continue-on-error: true
