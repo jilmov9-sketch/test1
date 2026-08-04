@@ -44,21 +44,24 @@ jobs:
         retention-days: 30
     
     - name: Create Release
-      if: github.ref == 'refs/heads/main'
-      uses: softprops/action-gh-release@v1
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: softprops/action-gh-release@v2
       with:
         files: dist/**/*
         tag_name: web-build-${{ github.run_number }}
         name: Web Build #${{ github.run_number }}
         draft: false
         prerelease: false
+        fail_on_unmatched_files: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: true
     
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
         publish_branch: gh-pages
+        allow_empty_commit: false
