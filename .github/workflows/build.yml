@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
   build:
@@ -11,17 +12,30 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
+    - name: Check for Unity Credentials
+      id: check_creds
+      run: |
+        if [ -z "${{ secrets.UNITY_EMAIL }}" ] || [ -z "${{ secrets.UNITY_PASSWORD }}" ]; then
+          echo "has_creds=false" >> $GITHUB_OUTPUT
+          echo "::error::Missing UNITY_EMAIL or UNITY_PASSWORD in Secrets. Build cannot proceed."
+          echo "Please add these secrets in Repository Settings -> Secrets and variables -> Actions"
+          exit 1
+        else
+          echo "has_creds=true" >> $GITHUB_OUTPUT
+        fi
+        
     - name: Setup Unity (Personal License)
+      if: steps.check_creds.outputs.has_creds == 'true'
       uses: game-ci/unity-builder@v4
       env:
         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       with:
-        targetPlatform: StandaloneWindows64
+        targetPlatform: WebGL
         buildName: TankBattle
         buildVersion: 1.0.0
         unityVersion: 2022.3.0f1
@@ -29,15 +43,16 @@ jobs:
         customParameters: "-nographics -batchmode"
         
     - name: Upload Build Artifacts
+      if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: WindowsBuild
-        path: build/
+        name: WebGL-Build
+        path: build/WebGL/
         
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
+    - name: Create Release (Optional - on tags)
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: build/*.exe
+        files: build/WebGL/**
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
