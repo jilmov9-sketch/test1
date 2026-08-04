@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Tank Battle - Web Version</title>
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- UI Overlay -->
+        <div id="ui-overlay">
+            <div id="start-screen">
+                <h1>🎮 3D TANK BATTLE</h1>
+                <p>WebGL Powered by Three.js</p>
+                <div class="controls-info">
+                    <h3>Controls:</h3>
+                    <p>🖱️ Mouse: Aim & Fire</p>
+                    <p>⌨️ WASD / Arrows: Move</p>
+                    <p>🎮 Gamepad: Supported</p>
+                </div>
+                <button id="start-btn">START GAME</button>
+            </div>
+            
+            <div id="hud" class="hidden">
+                <div id="score-display">Score: <span id="score">0</span></div>
+                <div id="health-display">Health: <span id="health">100</span>%</div>
+                <div id="wave-display">Wave: <span id="wave">1</span></div>
+            </div>
+            
+            <div id="game-over" class="hidden">
+                <h2>GAME OVER</h2>
+                <p>Final Score: <span id="final-score">0</span></p>
+                <button id="restart-btn">PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="src/js/game.js"></script>
+</body>
+</html>
