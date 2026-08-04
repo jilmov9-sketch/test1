@@ -64,4 +64,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
         publish_branch: gh-pages
-        allow_empty_commit: false
+        force_orphan: true
+        full_commit_message: 'Deploy to GitHub Pages'
+      continue-on-error: true
