@@ -59,7 +59,7 @@ jobs:
       continue-on-error: true
     
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: always() && github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,3 +67,4 @@ jobs:
         publish_branch: gh-pages
         force_orphan: true
         full_commit_message: 'Deploy to GitHub Pages'
+      continue-on-error: true
